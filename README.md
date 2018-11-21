@@ -6,9 +6,9 @@
 Exposes REST APIs to retrieve ProCoder's status
 
 ## APIs
-| Method | Path                   | Description   | Request Params | Query Strings | Response JSON Format  |
-| ------ | ---------------------- | ------------- | ------------- | ------------- | ------------- |
-| GET    | /api/logs/:num          | Returns the last {`num`} log entries in reverse chronological order | `num` must be an integer between 1 to 128 | - | [{state: `"queued"/"started"/"completed"/"failed"`, date: `datetime of the log entry`}] |
+| Method | Path                   | Description   | Request Params | Query Strings |
+| ------ | ---------------------- | ------------- | ------------- | ------------- |
+| GET    | /api/logs/:num          | Returns the last {`num`} log entries in reverse chronological order | `num` must be an integer between 1 to 128 | - |
 
 ### Response JSON Format
 The response is an array of objects. Each object has the following format:
