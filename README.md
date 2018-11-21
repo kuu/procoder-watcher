@@ -1,7 +1,6 @@
 [![NPM version](https://badge.fury.io/js/procoder-watcher.png)](https://badge.fury.io/js/procoder-watcher)
 [![Build Status](https://travis-ci.org/kuu/procoder-watcher.svg?branch=master)](https://travis-ci.org/kuu/procoder-watcher)
 [![Coverage Status](https://coveralls.io/repos/github/kuu/procoder-watcher/badge.svg?branch=master)](https://coveralls.io/github/kuu/procoder-watcher?branch=master)
-[![Dependency Status](https://gemnasium.com/kuu/procoder-watcher.png)](https://gemnasium.com/kuu/procoder-watcher)
 
 # procoder-watcher
 Exposes REST APIs to retrieve ProCoder's status
