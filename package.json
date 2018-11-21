@@ -1,0 +1,58 @@
+{
+  "name": "procoder-watcher",
+  "version": "0.0.1",
+  "description": "Exposes REST APIs to retrieve ProCoder's status",
+  "main": "index.js",
+  "scripts": {
+    "lint": "xo",
+    "dev": "npm run lint && node ./bin/cli.js",
+    "start": "forever start -o server.log -e error.log ./bin/cli.js",
+    "stop": "forever stop ./bin/cli.js",
+    "debug": "node-debug ./bin/cli.js --debug-brk",
+    "test": "npm run lint && ava --verbose",
+    "security": "nsp check",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+  },
+  "keywords": [
+    "ProCoder"
+  ],
+  "author": "Kuu Miyazaki",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "debug": "^4.1.0",
+    "express": "^4.16.4",
+    "forever": "^0.15.3",
+    "morgan": "^1.9.1",
+    "xml-js": "^1.6.8"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "coveralls": "^3.0.2",
+    "nsp": "^3.2.1",
+    "nyc": "^13.1.0",
+    "proxyquire": "^2.1.0",
+    "rewire": "^4.0.1",
+    "supertest": "^3.3.0",
+    "xo": "^0.23.0"
+  },
+  "xo": {
+    "esnext": true,
+    "space": true,
+    "rules": {
+      "ava/prefer-async-await": 0,
+      "ava/use-t": 0,
+      "capitalized-comments": 0,
+      "dot-notation": 0,
+      "new-cap": 0,
+      "no-cond-assign": 0,
+      "no-mixed-operators": 0,
+      "no-multi-assign": 0,
+      "no-template-curly-in-string": 0,
+      "import/no-dynamic-require": 0,
+      "unicorn/filename-case": 0,
+      "unicorn/catch-error-name": 0
+    }
+  }
+}
