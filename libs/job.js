@@ -28,7 +28,7 @@ function parseJob(id, data) {
     return null;
   }
 
-  const filePath = getSourceFilePath(cnpsXML.WorkerData.Sources);
+  const [filePath, queued] = getSourceFilePath(cnpsXML.WorkerData.Sources);
   if (!filePath) {
     return null;
   }
@@ -47,7 +47,7 @@ function parseJob(id, data) {
   const progress = parseInt(cnpsXML._attributes['PROGRESS.DWD'], 10);
   res.progress = progress;
   if (progress < 100) {
-    res.status = 'started';
+    res.status = queued ? 'queued' : 'started';
     return res;
   }
 
@@ -59,12 +59,12 @@ function parseJob(id, data) {
 
 function getSourceFilePath(sources) {
   if (sources.SourceFiles) {
-    return sources.SourceFiles._attributes.File_0;
+    return [sources.SourceFiles._attributes.File_0, false];
   }
   if (sources.Module_0._attributes.Filename) {
-    return sources.Module_0._attributes.Filename;
+    return [sources.Module_0._attributes.Filename, false];
   }
-  return sources.Module_0.ModuleData.SourceModules.MultiSrcModule_0._attributes.Filename;
+  return [sources.Module_0.ModuleData.SourceModules.MultiSrcModule_0._attributes.Filename, true];
 }
 
 function checkError(obj) {
