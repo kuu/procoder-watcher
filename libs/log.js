@@ -56,7 +56,7 @@ function updateJob(newJob) {
 }
 
 function getLatest(num = 10) {
-  return jobList.slice(-num);
+  return jobList.slice(-num).reverse();
 }
 
 module.exports = {
