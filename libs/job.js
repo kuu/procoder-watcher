@@ -2,7 +2,8 @@ const {xml2js} = require('xml-js');
 const {getFileBaseName, SEP} = require('./util');
 
 class Job {
-  constructor(type, source, queuedTime) {
+  constructor(id, type, source, queuedTime) {
+    this.id = id;
     this.type = type;
     this.source = source;
     this.queuedTime = queuedTime;
@@ -15,7 +16,7 @@ class Job {
   }
 }
 
-function parseJob(data) {
+function parseJob(id, data) {
   const job = xml2js(data, {compact: true});
   const {cnpsXML} = job;
   if (!cnpsXML) {
@@ -27,10 +28,16 @@ function parseJob(data) {
     return null;
   }
 
-  const error = checkError(cnpsXML.Failures.Errors);
-  const source = getFileBaseName(cnpsXML.WorkerData.Sources.SourceFiles._attributes.File_0, SEP);
+  const filePath = getSourceFilePath(cnpsXML.WorkerData.Sources);
+  if (!filePath) {
+    return null;
+  }
+
+  const source = getFileBaseName(filePath, SEP);
   const queuedTime = getQueuedTime(cnpsXML.JobSubmitInfo._attributes.Name);
-  const res = new Job(type, source, queuedTime);
+  const res = new Job(id, type, source, queuedTime);
+
+  const error = checkError(cnpsXML.Failures.Errors);
   if (error) {
     res.status = 'failed';
     res.error = error;
@@ -48,6 +55,16 @@ function parseJob(data) {
   res.destination = getFileBaseName(cnpsXML.WorkerData.Destinations.Module_0.TargetFiles._attributes.File_0, SEP);
   res.fileSize = parseInt(cnpsXML.WorkerData.Destinations.Module_0.TargetFiles._attributes['FileSize_0.QWD'], 10);
   return res;
+}
+
+function getSourceFilePath(sources) {
+  if (sources.SourceFiles) {
+    return sources.SourceFiles._attributes.File_0;
+  }
+  if (sources.Module_0._attributes.Filename) {
+    return sources.Module_0._attributes.Filename;
+  }
+  return sources.Module_0.ModuleData.SourceModules.MultiSrcModule_0._attributes.Filename;
 }
 
 function checkError(obj) {

@@ -14,7 +14,8 @@ function iterateFilesInDir(logDir) {
       continue;
     }
     const filePath = `${logDir}${util.SEP}${file}`;
-    const newJob = parse(util.getFileData(filePath));
+    debug(filePath);
+    const newJob = parse(file.slice(0, -4), util.getFileData(filePath));
     if (!newJob) {
       continue;
     }
@@ -47,7 +48,7 @@ function addJob(newJob) {
 // TODO: To be optimized
 function updateJob(newJob) {
   for (const [index, job] of jobList.entries()) {
-    if (job.source === newJob.source && job.queuedTime.getTime() === newJob.queuedTime.getTime()) {
+    if (job.id === newJob.id) {
       debug(`Job is updated: [${newJob.source}] - ${newJob.status} : ${newJob.progress} %`);
       jobList[index] = newJob;
       break;
