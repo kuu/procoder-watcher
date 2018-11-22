@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/kuu/procoder-watcher/badge.svg?branch=master)](https://coveralls.io/github/kuu/procoder-watcher?branch=master)
 
 # procoder-watcher
-Exposes REST APIs to retrieve ProCoder's status
+Exposes REST APIs to retrieve EDIUS ProCoder's transcoding job status
 
 ## APIs
 | Method | Path                   | Description   | Request Params | Query Strings |
