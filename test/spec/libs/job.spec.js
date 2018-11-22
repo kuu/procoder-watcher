@@ -22,23 +22,23 @@ test.before.cb(t => {
 });
 
 test('job:parse:invalid', t => {
-  const job = parse('');
+  const job = parse('xxx', '');
   t.is(job, null);
 });
 
 test('job:parse:invalidType', t => {
-  const job = parse(data.replace('TRANSCODINGJOB', 'xxx'));
+  const job = parse('xxx', data.replace('TRANSCODINGJOB', 'xxx'));
   t.is(job, null);
 });
 
 test('job:parse:failed', t => {
-  const job = parse(data.replace('<Errors/>', '<Errors><dummy /></Errors>'));
+  const job = parse('xxx', data.replace('<Errors/>', '<Errors><dummy /></Errors>'));
   t.is(job.status, 'failed');
   t.not(job.error, null);
 });
 
 test('job:parse:started', t => {
-  const job = parse(data.replace('"100"', '"99"'));
+  const job = parse('xxx', data.replace('"100"', '"99"'));
   t.is(job.status, 'started');
   t.is(job.progress, 99);
   t.is(job.source, 'cn_gumball_021B.avi');
@@ -46,7 +46,7 @@ test('job:parse:started', t => {
 });
 
 test('job:parse:completed', t => {
-  const job = parse(data);
+  const job = parse('xxx', data);
   t.is(job.type, 'TRANSCODINGJOB');
   t.is(job.status, 'completed');
   t.is(job.error, null);
